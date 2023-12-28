@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Projeto</string>
+    <string name="entrar">Entrar</string>
+    <string name="text_cadastro"><u>Clique aqui para se registrar</u></string>
+    <string name="title_cadastro">Cadastre-se</string>
+    <string name="deslogar">Deslogar</string>
+</resources>
