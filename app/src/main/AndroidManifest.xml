@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,15 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projeto"
         tools:targetApi="31">
-        <activity
-            android:name=".TelaUtilizador"
-            android:exported="false" />
-        <activity
-            android:name=".FormCadastro"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".FormLogin"
             android:exported="true">
@@ -30,6 +28,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".TelaPrincipal" />
+        <activity android:name=".Camera" />
+        <activity android:name=".TelaUtilizador" />
+        <activity android:name=".FormCadastro" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.projeto.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
