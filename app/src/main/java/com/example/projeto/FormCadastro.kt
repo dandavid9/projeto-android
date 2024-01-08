@@ -1,5 +1,6 @@
 package com.example.projeto
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -64,6 +65,10 @@ class FormCadastro : AppCompatActivity() {
                     snackbar.setBackgroundTint(Color.WHITE)
                     snackbar.setTextColor(Color.BLACK)
                     snackbar.show()
+
+                    val proximaActivityInte = Intent(this@FormCadastro, FotoPerfil::class.java)
+                    startActivity(proximaActivityInte)
+
                 } else {
                     var erro: String
                     try {

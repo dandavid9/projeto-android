@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projeto"
         tools:targetApi="31">
-
+        <activity
+            android:name=".InteressesUser"
+            android:exported="false" />
         <activity
             android:name=".FormLogin"
             android:exported="true">
@@ -28,11 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".TelaPrincipal" />
         <activity android:name=".Camera" />
         <activity android:name=".TelaUtilizador" />
         <activity android:name=".FormCadastro" />
+        <activity android:name=".FotoPerfil" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
