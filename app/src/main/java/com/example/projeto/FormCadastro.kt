@@ -66,8 +66,9 @@ class FormCadastro : AppCompatActivity() {
                     snackbar.setTextColor(Color.BLACK)
                     snackbar.show()
 
-                    val proximaActivityInte = Intent(this@FormCadastro, FotoPerfil::class.java)
-                    startActivity(proximaActivityInte)
+                    val intent = Intent(this, TelaPrincipal::class.java)
+                    startActivity(intent)
+                    finish()
 
                 } else {
                     var erro: String
