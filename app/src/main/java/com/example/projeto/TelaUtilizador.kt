@@ -2,7 +2,9 @@ package com.example.projeto
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
@@ -32,7 +34,14 @@ class TelaUtilizador : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 val data: Intent? = it.data
-                val imageBitmap: Bitmap? = data?.extras?.get("data") as? Bitmap
+                var imageBitmap: Bitmap? = null
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    imageBitmap = data?.extras?.getParcelable("data", Parcelable::class.java) as? Bitmap
+                }
+                else {
+                    imageBitmap = data?.extras?.getParcelable("data") as? Bitmap
+                }
                 userImage.setImageBitmap(imageBitmap)
 
                 if (imageBitmap != null) {
