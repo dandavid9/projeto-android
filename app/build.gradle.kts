@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +9,17 @@ plugins {
 android {
     namespace = "com.example.projeto"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
+    buildTypes.configureEach {
+        buildConfigField("String", "TOMTOM_API_KEY", "\"${property("tomtomApiKey")}\"")
+    }
+
+    fun Packaging.() {
+        jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
+    }
 
     defaultConfig {
         applicationId = "com.example.projeto"
@@ -36,10 +49,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
 
+    val version = "0.43.0"
+    implementation("com.tomtom.sdk.maps:map-display:$version")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
@@ -59,6 +75,7 @@ dependencies {
     implementation ("org.tensorflow:tensorflow-lite-task-vision:0.3.1")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.tomtom.sdk.maps:map-display:0.43.0")
 
 
 }

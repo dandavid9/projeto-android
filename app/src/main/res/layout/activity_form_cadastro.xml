@@ -63,11 +63,10 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCadastrar"
         style="@style/Button"
+        android:layout_marginTop="32dp"
         android:text="Cadastrar"
-        android:layout_marginTop="30sp"
-        app:layout_constraintTop_toBottomOf="@id/containerComponents"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerComponents" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

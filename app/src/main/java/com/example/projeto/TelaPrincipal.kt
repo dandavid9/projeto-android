@@ -7,6 +7,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.tomtom.sdk.map.display.TomTomMap
+import com.tomtom.sdk.map.display.ui.MapFragment
 
 class TelaPrincipal : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +17,12 @@ class TelaPrincipal : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as? MapFragment
+
+        mapFragment?.getMapAsync { tomtomMap: TomTomMap ->
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
