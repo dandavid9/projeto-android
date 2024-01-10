@@ -7,26 +7,16 @@
     android:background="@drawable/background"
     tools:context=".TelaUtilizador">
 
-    <View
-        android:id="@+id/containerUser"
+    <ImageView
+        android:id="@+id/userImage"
         android:layout_width="150sp"
         android:layout_height="150sp"
         android:background="@drawable/container_user"
+        android:src="@drawable/ic_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30sp"
-        />
-
-    <ImageView
-        android:id="@+id/userImage"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
-        android:src="@drawable/ic_user"
-        app:layout_constraintStart_toStartOf="@id/containerUser"
-        app:layout_constraintEnd_toEndOf="@id/containerUser"
-        app:layout_constraintTop_toTopOf="@id/containerUser"
-        app:layout_constraintBottom_toBottomOf="@id/containerUser"
         />
 
     <ImageView
@@ -37,7 +27,7 @@
         android:layout_marginLeft="20sp"
         android:layout_marginTop="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerUser"
+        app:layout_constraintTop_toBottomOf="@id/userImage"
         />
     
     <TextView
@@ -49,7 +39,7 @@
         android:textStyle="bold"
         android:layout_marginTop="40sp"
         android:layout_marginLeft="20sp"
-        app:layout_constraintTop_toBottomOf="@id/containerUser"
+        app:layout_constraintTop_toBottomOf="@id/userImage"
         app:layout_constraintStart_toEndOf="@id/userIcon"
         />
 
