@@ -29,10 +29,10 @@ class TelaUtilizador : AppCompatActivity() {
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var utilizadorID: String
     private val captureImage =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
-                val imageBitmap: Bitmap? = data?.extras?.getString("data") as? Bitmap
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val data: Intent? = it.data
+                val imageBitmap: Bitmap? = data?.extras?.get("data") as? Bitmap
                 userImage.setImageBitmap(imageBitmap)
 
                 if (imageBitmap != null) {
@@ -48,7 +48,7 @@ class TelaUtilizador : AppCompatActivity() {
         iniciarComponentes()
 
         userImage.setOnClickListener {
-            abrirGaleria()
+            abrirCamera()
         }
 
         btnDeslogar.setOnClickListener {
@@ -83,7 +83,7 @@ class TelaUtilizador : AppCompatActivity() {
     }
 
 
-    private fun abrirGaleria() {
+    private fun abrirCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         captureImage.launch(cameraIntent)
     }
