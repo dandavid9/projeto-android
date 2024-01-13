@@ -9,4 +9,5 @@
     <string name="tv_description">Selecione uma imagem prévia ou tire uma foto</string>
     <string name="tv_placeholder">Object detection demo</string>
     <string name="text_foto">Foto de Perfil</string>
+    <string name="location_permission_denied">Permission denied</string>
 </resources>

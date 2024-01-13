@@ -7,10 +7,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.tomtom.sdk.map.display.TomTomMap
-import com.tomtom.sdk.map.display.ui.MapFragment
 
 class TelaPrincipal : AppCompatActivity() {
+    val apiKey = BuildConfig.TOMTOM_API_KEY
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_principal)
@@ -18,11 +17,11 @@ class TelaPrincipal : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as? MapFragment
+    //iniciarMapa()
 
-        mapFragment?.getMapAsync { tomtomMap: TomTomMap ->
-
-        }
+    }
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 101
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -37,9 +36,16 @@ class TelaPrincipal : AppCompatActivity() {
                 startActivity(i)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    fun abrirMapa(view: View) {
+        val i: Intent = Intent(this, Mapa::class.java)
+        startActivity(i)
+    }
+
     fun abrirCamera(view: View) {
         val i: Intent = Intent(this, Camera::class.java)
         startActivity(i)

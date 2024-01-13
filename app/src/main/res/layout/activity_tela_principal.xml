@@ -11,34 +11,39 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar"
+        android:gravity="center"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="@string/app_name"
-        app:titleTextColor="#fff"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.fragment.app.FragmentContainerView
-        xmlns:tomtom="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/map_fragment"
-        android:name="com.tomtom.sdk.map.display.ui.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tomtom:mapKey="2038rElSGPRbkdVZyl9yl6I1j8C91MAd" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleTextColor="#fff" />
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCamera"
-        style="@style/Button"
         android:text="Camera"
+        style="@style/Button"
+        android:drawableRight="@drawable/ic_camera"
         android:layout_marginTop="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:onClick="abrirCamera"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMapa"
+        android:text="Camera"
+        style="@style/Button"
+        android:drawableRight="@drawable/ic_camera"
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="abrirMapa"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

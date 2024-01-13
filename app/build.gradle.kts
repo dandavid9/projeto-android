@@ -76,6 +76,9 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.tomtom.sdk.maps:map-display:0.43.0")
+    implementation("com.tomtom.sdk.location:provider-android:0.43.0")
+    implementation("com.tomtom.sdk.search:search-online:0.43.0")
+    implementation("com.tomtom.sdk.search:ui:0.43.0")
 
 
 }
