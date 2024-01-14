@@ -12,9 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,6 +52,7 @@ class TelaUtilizador : AppCompatActivity() {
             }
         }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_utilizador)
@@ -66,6 +69,8 @@ class TelaUtilizador : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        exibirListaInteresses()
 
 
     }
@@ -137,6 +142,27 @@ class TelaUtilizador : AppCompatActivity() {
                 )
             }
 
+    }
+
+    private fun exibirListaInteresses() {
+        val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+        val utilizadorID: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        val collectionReference = db.collection("Utilizadores").document(utilizadorID)
+            .collection("Interesses")
+
+        collectionReference.get()
+            .addOnSuccessListener { querySnapshot ->
+                val interesses = StringBuilder()
+
+                for (document in querySnapshot) {
+                    val interesse = document.getString("interesse")
+                    interesses.append("$interesse\n")
+                }
+
+                val textViewListaInteresses: TextView = findViewById(R.id.textViewInteresses)
+                textViewListaInteresses.text = interesses.toString()
+            }
     }
 
     private fun carregarImagem(url: String) {

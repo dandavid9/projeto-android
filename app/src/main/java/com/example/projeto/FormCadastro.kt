@@ -64,7 +64,7 @@ class FormCadastro : AppCompatActivity() {
                     snackbar.setTextColor(Color.BLACK)
                     snackbar.show()
 
-                    val intent = Intent(this, TelaPrincipal::class.java)
+                    val intent = Intent(this, InteressesUser::class.java)
                     startActivity(intent)
                     finish()
 
