@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Projeto</string>
     <string name="entrar">Entrar</string>
-    <string name="text_cadastro"><u>Clique aqui para se registrar</u></string>
-    <string name="title_cadastro">Cadastre-se</string>
+    <string name="text_registo"><u>Clique aqui para se registar</u></string>
+    <string name="title_registo">Registe-se</string>
     <string name="deslogar">Deslogar</string>
     <string name="selecionar_idioma">Selecione o idioma de destino</string>
     <string name="tv_take_photo">Tirar foto</string>
     <string name="tv_description">Selecione uma imagem prévia ou tire uma foto</string>
     <string name="tv_placeholder">Object detection demo</string>
-    <string name="text_foto">Foto de Perfil</string>
+    <string name="text_interesses">Interesses</string>
     <string name="location_permission_denied">Permission denied</string>
 </resources>

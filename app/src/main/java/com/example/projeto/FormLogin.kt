@@ -16,10 +16,10 @@ import com.google.firebase.auth.FirebaseUser
 class FormLogin : AppCompatActivity() {
 
     private lateinit var editEmail: EditText
-    private lateinit var editSenha: EditText
+    private lateinit var editPass: EditText
     private lateinit var btnEntrar: Button
     private lateinit var progressBar: ProgressBar
-    private lateinit var textoCadastro: TextView
+    private lateinit var textoRegisto: TextView
     var mensagens = arrayOf("Preencha todos os campos", "Login efetuado com sucesso")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,16 +28,16 @@ class FormLogin : AppCompatActivity() {
 
         iniciarComponentes()
 
-        textoCadastro.setOnClickListener {
+        textoRegisto.setOnClickListener {
             val i = Intent(this, FormCadastro::class.java)
             startActivity(i)
         }
 
         btnEntrar.setOnClickListener {
             var email: String = editEmail.text.toString()
-            var senha: String = editSenha.text.toString()
+            var password: String = editPass.text.toString()
 
-            if (email.isNullOrEmpty() || senha.isNullOrEmpty()) {
+            if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
                 var snackbar: Snackbar =
                     Snackbar.make(it, mensagens[0], Snackbar.LENGTH_SHORT)
                 snackbar.setBackgroundTint(Color.WHITE)
@@ -51,9 +51,9 @@ class FormLogin : AppCompatActivity() {
 
     private fun autenticarUtilizador(view: View) {
         var email: String = editEmail.text.toString()
-        var senha: String = editSenha.text.toString()
+        var password: String = editPass.text.toString()
 
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, senha).addOnCompleteListener {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 progressBar.visibility = View.VISIBLE
 
@@ -65,7 +65,7 @@ class FormLogin : AppCompatActivity() {
                 try {
                     throw it.exception!!
                 } catch (e: Exception) {
-                    erro = "Erro ao logar utilizador"
+                    erro = "Erro dar login com o utilizador"
                 }
 
                 var snackbar: Snackbar = Snackbar.make(view, erro, Snackbar.LENGTH_SHORT)
@@ -96,10 +96,10 @@ class FormLogin : AppCompatActivity() {
 
     private fun iniciarComponentes() {
         editEmail = findViewById(R.id.editEmail)
-        editSenha = findViewById(R.id.editSenha)
+        editPass = findViewById(R.id.editPass)
         btnEntrar = findViewById(R.id.btnEntrar)
         progressBar = findViewById(R.id.progressBar)
-        textoCadastro = findViewById(R.id.textTelaCadastro)
+        textoRegisto = findViewById(R.id.textTelaRegisto)
     }
 
 }

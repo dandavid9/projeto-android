@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -16,15 +15,14 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Objects
 
 class FormCadastro : AppCompatActivity() {
 
     private lateinit var editNome: EditText
     private lateinit var editEmail: EditText
-    private lateinit var editSenha: EditText
-    private lateinit var btnCadastrar: Button
-    var mensagens = arrayOf("Preencha todos os campos", "Cadastro realizado com sucesso")
+    private lateinit var editPass: EditText
+    private lateinit var btnRegistar: Button
+    var mensagens = arrayOf("Preencha todos os campos", "Registo realizado com sucesso")
     lateinit var utilizadorID: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +31,13 @@ class FormCadastro : AppCompatActivity() {
 
         iniciarComponentes()
 
-        btnCadastrar.setOnClickListener {
+        btnRegistar.setOnClickListener {
 
             var nome: String = editNome.text.toString()
             var email: String = editEmail.text.toString()
-            var senha: String = editSenha.text.toString()
+            var password: String = editPass.text.toString()
 
-            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+            if (nome.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 var snackbar: Snackbar = Snackbar.make(it, mensagens[0], Snackbar.LENGTH_SHORT)
                 snackbar.setBackgroundTint(Color.WHITE)
                 snackbar.setTextColor(Color.BLACK)
@@ -52,9 +50,9 @@ class FormCadastro : AppCompatActivity() {
 
     private fun cadastrarUtilizador(view: View) {
         var email: String = editEmail.text.toString()
-        var senha: String = editSenha.text.toString()
+        var password: String = editPass.text.toString()
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
 
@@ -75,13 +73,13 @@ class FormCadastro : AppCompatActivity() {
                     try {
                         throw it.exception!!
                     } catch (e: FirebaseAuthWeakPasswordException) {
-                        erro = "Digite uma senha com no mínimo 6 caracteres"
+                        erro = "Digite uma password com no mínimo 6 caracteres"
                     } catch (e: FirebaseAuthUserCollisionException) {
-                        erro = "Esta conta já foi cadastrada"
+                        erro = "Esta conta já foi registada"
                     } catch (e: FirebaseAuthInvalidCredentialsException) {
                         erro = "Email inválido"
                     } catch (e: Exception) {
-                        erro = "Erro ao cadastrar utilizador"
+                        erro = "Erro ao registar utilizador"
                     }
 
                     var snackbar: Snackbar = Snackbar.make(view, erro, Snackbar.LENGTH_SHORT)
@@ -107,9 +105,9 @@ class FormCadastro : AppCompatActivity() {
         val documentReference: DocumentReference =
             db.collection("Utilizadores").document(utilizadorID)
         documentReference.set(utilizadores).addOnSuccessListener {
-            Log.d("db", "Sucesso ao salvar os dados do utilizadorS")
+            Log.d("db", "Sucesso ao guardar os dados do utilizadorS")
         }.addOnFailureListener {
-            Log.d("db_erorr", "Erro ao salvar os dados do utilizador: $it")
+            Log.d("db_erorr", "Erro ao guardar os dados do utilizador: $it")
         }
 
     }
@@ -117,7 +115,7 @@ class FormCadastro : AppCompatActivity() {
     private fun iniciarComponentes() {
         editNome = findViewById(R.id.editNome)
         editEmail = findViewById(R.id.editEmail)
-        editSenha = findViewById(R.id.editSenha)
-        btnCadastrar = findViewById(R.id.btnCadastrar)
+        editPass = findViewById(R.id.editPass)
+        btnRegistar = findViewById(R.id.btnRegistar)
     }
 }
