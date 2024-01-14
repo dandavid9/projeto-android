@@ -7,6 +7,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.tomtom.sdk.search.ui.SearchView
+import com.tomtom.sdk.search.ui.SearchViewListener
 
 class TelaPrincipal : AppCompatActivity() {
     val apiKey = BuildConfig.TOMTOM_API_KEY
@@ -18,8 +20,29 @@ class TelaPrincipal : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
     //iniciarMapa()
+        pesquisar()
 
     }
+
+    fun pesquisar() {
+        val searchView: SearchView by lazy { findViewById(R.id.search_view) }
+
+        searchView.searchViewListener = object : SearchViewListener {
+            override fun onSearchQueryCancel() {
+                /* YOUR CODE GOES HERE */
+            }
+
+            override fun onSearchQueryChanged(input: String) {
+                /* YOUR CODE GOES HERE */
+            }
+
+            override fun onCommandInsert(command: String) {
+                /* YOUR CODE GOES HERE */
+            }
+        }
+
+    }
+
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 101
     }
