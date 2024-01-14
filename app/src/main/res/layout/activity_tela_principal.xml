@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
-
     <com.tomtom.sdk.search.ui.SearchResultsView
         android:id="@+id/search_results_view"
         android:layout_width="match_parent"
