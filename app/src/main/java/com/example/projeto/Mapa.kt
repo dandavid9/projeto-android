@@ -2,11 +2,13 @@ package com.example.projeto
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.tomtom.sdk.location.GeoPoint
 import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.location.android.AndroidLocationProvider
@@ -15,6 +17,7 @@ import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
+import com.tomtom.sdk.map.display.ui.UiComponentClickListener
 
 class Mapa : AppCompatActivity() {
     val apiKey = BuildConfig.TOMTOM_API_KEY
@@ -28,7 +31,7 @@ class Mapa : AppCompatActivity() {
         if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true &&
             permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
         ) {
-            showUserLocation()
+            showLocation()
         } else {
             Toast.makeText(
                 this,
@@ -37,6 +40,7 @@ class Mapa : AppCompatActivity() {
             ).show()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mapa)
@@ -67,23 +71,46 @@ class Mapa : AppCompatActivity() {
 
     private fun enableUserLocation() {
         if (areLocationPermissionsGranted()) {
-            showUserLocation()
+            showLocation()
         } else {
             requestLocationPermission()
         }
     }
 
-    private fun showUserLocation() {
+    private fun showLocation() {
         locationProvider.enable()
-        // zoom to current location at city level
+
+
         onLocationUpdateListener = OnLocationUpdateListener { location ->
-            tomTomMap.moveCamera(CameraOptions(location.position, zoom = 8.0))
+            tomTomMap.moveCamera(CameraOptions(location.position, zoom = 12.0))
             locationProvider.removeOnLocationUpdateListener(onLocationUpdateListener)
         }
-        locationProvider.addOnLocationUpdateListener(onLocationUpdateListener)
-        tomTomMap.setLocationProvider(locationProvider)
-        val locationMarker = LocationMarkerOptions(type = LocationMarkerOptions.Type.Pointer)
-        tomTomMap.enableLocationMarker(locationMarker)
+
+        val extras = intent.extras
+        if (extras != null && extras.containsKey("local")) {
+            val placePosition = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                extras.getParcelable("local", GeoPoint::class.java)
+            } else {
+                extras.getParcelable("local")
+            }
+            if (placePosition != null) {
+                tomTomMap.moveCamera(CameraOptions(placePosition, zoom = 12.0))
+                val uiComponentClickListener = UiComponentClickListener {
+                    locationProvider.addOnLocationUpdateListener(onLocationUpdateListener)
+                    tomTomMap.setLocationProvider(locationProvider)
+                    val locationMarker = LocationMarkerOptions(type = LocationMarkerOptions.Type.Pointer)
+                    tomTomMap.enableLocationMarker(locationMarker)
+                }
+                mapFragment.currentLocationButton.addCurrentLocationButtonClickListener(
+                    uiComponentClickListener
+                )
+            }
+        } else {
+            locationProvider.addOnLocationUpdateListener(onLocationUpdateListener)
+            tomTomMap.setLocationProvider(locationProvider)
+            val locationMarker = LocationMarkerOptions(type = LocationMarkerOptions.Type.Pointer)
+            tomTomMap.enableLocationMarker(locationMarker)
+        }
     }
 
     private fun requestLocationPermission() {

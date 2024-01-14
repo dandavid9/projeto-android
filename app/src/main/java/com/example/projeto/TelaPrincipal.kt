@@ -12,6 +12,8 @@ import com.tomtom.sdk.search.Search
 import com.tomtom.sdk.search.SearchOptions
 import com.tomtom.sdk.search.online.OnlineSearch
 import com.tomtom.sdk.search.ui.SearchFragment
+import com.tomtom.sdk.search.ui.SearchFragmentListener
+import com.tomtom.sdk.search.ui.model.PlaceDetails
 import com.tomtom.sdk.search.ui.model.SearchApiParameters
 import com.tomtom.sdk.search.ui.model.SearchProperties
 import kotlinx.coroutines.CoroutineScope
@@ -53,6 +55,35 @@ class TelaPrincipal : AppCompatActivity() {
 
         searchFragment.setSearchApi(pesquisar())
 
+        val searchFragmentListener = object : SearchFragmentListener {
+            override fun onSearchBackButtonClick() {
+                /* YOUR CODE GOES HERE */
+            }
+
+            override fun onSearchResultClick(placeDetails: PlaceDetails) {
+                irParaMapa(placeDetails)
+            }
+
+            override fun onSearchError(throwable: Throwable) {
+                /* YOUR CODE GOES HERE */
+            }
+
+            override fun onSearchQueryChanged(input: String) {
+                /* YOUR CODE GOES HERE */
+            }
+
+            override fun onCommandInsert(command: String) {
+                /* YOUR CODE GOES HERE */
+            }
+        }
+        searchFragment.setFragmentListener(searchFragmentListener)
+
+    }
+
+    private fun irParaMapa(placeDetails: PlaceDetails) {
+        val intent: Intent = Intent(this, Mapa::class.java)
+        intent.putExtra("local", placeDetails.position)
+        startActivity(intent)
     }
 
     fun pesquisar(): Search {
@@ -68,6 +99,16 @@ class TelaPrincipal : AppCompatActivity() {
         }
 
         return search
+    }
+
+    fun abrirMapa(view: View) {
+        val i: Intent = Intent(this, Mapa::class.java)
+        startActivity(i)
+    }
+
+    fun abrirCamera(view: View) {
+        val i: Intent = Intent(this, Camera::class.java)
+        startActivity(i)
     }
 
 
@@ -88,13 +129,5 @@ class TelaPrincipal : AppCompatActivity() {
         }
     }
 
-    fun abrirMapa(view: View) {
-        val i: Intent = Intent(this, Mapa::class.java)
-        startActivity(i)
-    }
 
-    fun abrirCamera(view: View) {
-        val i: Intent = Intent(this, Camera::class.java)
-        startActivity(i)
-    }
 }
