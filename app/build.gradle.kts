@@ -17,13 +17,13 @@ android {
         buildConfigField("String", "TOMTOM_API_KEY", "\"${property("tomtomApiKey")}\"")
     }
 
-    fun Packaging.() {
+    packagingOptions {
         jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
     }
 
     defaultConfig {
         applicationId = "com.example.projeto"
-        minSdk = 28
+        minSdk = 21
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -79,6 +79,6 @@ dependencies {
     implementation("com.tomtom.sdk.location:provider-android:0.43.0")
     implementation("com.tomtom.sdk.search:search-online:0.43.0")
     implementation("com.tomtom.sdk.search:ui:0.43.0")
-
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
 }
