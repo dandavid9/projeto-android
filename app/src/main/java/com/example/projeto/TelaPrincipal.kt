@@ -5,19 +5,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.tomtom.sdk.location.GeoPoint
 import com.tomtom.sdk.search.Search
-import com.tomtom.sdk.search.SearchCallback
 import com.tomtom.sdk.search.SearchOptions
-import com.tomtom.sdk.search.SearchResponse
-import com.tomtom.sdk.search.common.error.SearchFailure
 import com.tomtom.sdk.search.online.OnlineSearch
-import com.tomtom.sdk.search.ui.SearchResultsView
-import com.tomtom.sdk.search.ui.SearchSuggestionView
-import com.tomtom.sdk.search.ui.SearchView
-import com.tomtom.sdk.search.ui.SearchViewListener
+import com.tomtom.sdk.search.ui.SearchFragment
+import com.tomtom.sdk.search.ui.model.SearchApiParameters
+import com.tomtom.sdk.search.ui.model.SearchProperties
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,9 +23,6 @@ import kotlinx.coroutines.withContext
 class TelaPrincipal : AppCompatActivity() {
     val apiKey = BuildConfig.TOMTOM_API_KEY
     private lateinit var search: Search
-    private val searchView: SearchView by lazy { findViewById(R.id.search_view) }
-    private val searchResultsView: SearchResultsView by lazy { findViewById(R.id.search_results_view) }
-    private val searchSuggestionView: SearchSuggestionView by lazy { findViewById(R.id.search_suggestion_view) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_principal)
@@ -43,56 +36,40 @@ class TelaPrincipal : AppCompatActivity() {
     }
 
     fun iniciarPesquisa() {
+        val searchApiParameters = SearchApiParameters(
+            limit = 5,
+            position = GeoPoint(52.377956, 4.897070)
+        )
+        val searchProperties = SearchProperties(
+            searchApiKey = apiKey,
+            searchApiParameters = searchApiParameters,
+            commands = listOf("TomTom")
+        )
 
-        searchView.searchViewListener = object : SearchViewListener {
+        val searchFragment = SearchFragment.newInstance(searchProperties)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.search_fragment_container, searchFragment)
+            .commitNow()
 
-            override fun onCommandInsert(command: String) {
-                //
-            }
+        searchFragment.setSearchApi(pesquisar())
 
-            override fun onSearchQueryCancel() {
-                //
-            }
-
-            override fun onSearchQueryChanged(input: String) {
-                pesquisar()
-            }
-        }
     }
 
-    fun pesquisar() {
+    fun pesquisar(): Search {
         val query = "TomTom"
         val searchOptions =
             SearchOptions(query, countryCodes = setOf("NLD", "POL"), limit = 5)
 
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                search.search(searchOptions,
-                    object : SearchCallback {
-                        override fun onFailure(failure: SearchFailure) {
-                            Toast.makeText(
-                                this@TelaPrincipal,
-                                failure.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        override fun onSuccess(result: SearchResponse) {
-                            addSearchResultsToSearchResultsView(result)
-                        }
-                    })
+                search.search(searchOptions)
 
             }
         }
+
+        return search
     }
 
-
-
-    fun addSearchResultsToSearchResultsView(result: SearchResponse) {
-        //val places: List<PlaceDetails> = result.results.map { it }
-
-        //searchResultsView.update(places, result.summary.query)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

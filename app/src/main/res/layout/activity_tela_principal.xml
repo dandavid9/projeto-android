@@ -20,23 +20,10 @@
         app:title="@string/app_name"
         app:titleTextColor="#fff" />
 
-    <com.tomtom.sdk.search.ui.SearchView
-        android:id="@+id/search_view"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/search_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
-
-    <com.tomtom.sdk.search.ui.SearchResultsView
-        android:id="@+id/search_results_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/search_view"/>
-
-    <com.tomtom.sdk.search.ui.SearchSuggestionView
-        android:id="@+id/search_suggestion_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/search_results_view"/>
+        android:layout_height="match_parent"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
