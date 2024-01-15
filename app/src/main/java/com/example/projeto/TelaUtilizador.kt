@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +27,7 @@ import java.io.ByteArrayOutputStream
 
 class TelaUtilizador : AppCompatActivity() {
 
-    private lateinit var textViewInteresses: TextView
+    private lateinit var lnComponents: LinearLayout
     private lateinit var userName: TextView
     private lateinit var userEmail: TextView
     private lateinit var btnDeslogar: Button
@@ -38,10 +40,10 @@ class TelaUtilizador : AppCompatActivity() {
                 val data: Intent? = it.data
                 var imageBitmap: Bitmap? = null
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    imageBitmap = data?.extras?.getParcelable("data", Parcelable::class.java) as? Bitmap
-                }
-                else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    imageBitmap =
+                        data?.extras?.getParcelable("data", Parcelable::class.java) as? Bitmap
+                } else {
                     imageBitmap = data?.extras?.getParcelable("data") as? Bitmap
                 }
                 userImage.setImageBitmap(imageBitmap)
@@ -72,7 +74,7 @@ class TelaUtilizador : AppCompatActivity() {
 
         exibirListaInteresses()
 
-        textViewInteresses.setOnClickListener {
+        lnComponents.setOnClickListener {
             val i: Intent = Intent(this, InteressesUser::class.java)
             startActivity(i)
         }
@@ -161,11 +163,15 @@ class TelaUtilizador : AppCompatActivity() {
 
                 for (document in querySnapshot) {
                     val interesse = document.getString("interesse")
+
+                    val textViewLayout =
+                        LayoutInflater.from(this).inflate(R.layout.item_interesse, null)
+                    val textInteresse = textViewLayout.findViewById<TextView>(R.id.interesse)
+                    textInteresse.text = interesse
+
+                    lnComponents.addView(textViewLayout)
                     interesses.append("$interesse\n")
                 }
-
-                val textViewListaInteresses: TextView = findViewById(R.id.textViewInteresses)
-                textViewListaInteresses.text = interesses.toString()
             }
     }
 
@@ -183,7 +189,7 @@ class TelaUtilizador : AppCompatActivity() {
         userEmail = findViewById(R.id.userEmail)
         btnDeslogar = findViewById(R.id.btnDeslogar)
         userImage = findViewById(R.id.userImage)
-        textViewInteresses = findViewById(R.id.textViewInteresses)
+        lnComponents = findViewById(R.id.lnComponents)
     }
 
     fun abrirTelaPrincipal(view: View) {
@@ -191,5 +197,6 @@ class TelaUtilizador : AppCompatActivity() {
         startActivity(i)
         finish()
     }
+
 
 }
