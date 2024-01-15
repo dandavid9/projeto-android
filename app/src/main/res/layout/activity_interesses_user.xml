@@ -14,8 +14,6 @@
         android:layout_height="98dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,50 +31,50 @@
         app:layout_constraintTop_toBottomOf="@id/logo"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="563dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/txtInteresses"
-        tools:context=".InteressesUser"
-        tools:layout_editor_absoluteX="0dp">
+
 
         <EditText
             android:id="@+id/editTextInteresse"
             style="@style/Edit_Text"
-            android:layout_width="355dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="#ffffff"
             android:hint="Adicione um interesse"
-            android:padding="10dp" />
+            app:layout_constraintTop_toBottomOf="@+id/txtInteresses"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <android.widget.Button
             android:id="@+id/buttonAdicionar"
             style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Adicionar Interesse" />
+            android:text="Adicionar Interesse"
+            app:layout_constraintTop_toBottomOf="@+id/editTextInteresse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <android.widget.Button
             android:id="@+id/buttonVerPerfil"
             style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ver Perfil" />
+            android:text="Ver Perfil"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAdicionar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/textViewInteresses"
-            android:layout_width="match_parent"
-            android:layout_height="283dp"
+        <ScrollView
+            android:id="@+id/containerComponents"
+            style="@style/ContainerComponents"
             android:layout_marginTop="16dp"
-            android:background="@color/white"
-            android:textStyle="bold"
-            android:padding="10dp"/>
+            app:layout_constraintTop_toBottomOf="@id/buttonVerPerfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnComponents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+        </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

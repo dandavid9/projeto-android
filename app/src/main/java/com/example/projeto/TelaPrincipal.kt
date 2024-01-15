@@ -7,9 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.tomtom.quantity.Distance
 import com.tomtom.sdk.location.GeoPoint
 import com.tomtom.sdk.search.Search
-import com.tomtom.sdk.search.SearchOptions
+import com.tomtom.sdk.search.autocomplete.AutocompleteOptions
 import com.tomtom.sdk.search.online.OnlineSearch
 import com.tomtom.sdk.search.ui.SearchFragment
 import com.tomtom.sdk.search.ui.SearchFragmentListener
@@ -87,13 +88,17 @@ class TelaPrincipal : AppCompatActivity() {
     }
 
     fun pesquisar(): Search {
-        val query = "TomTom"
-        val searchOptions =
-            SearchOptions(query, countryCodes = setOf("NLD", "POL"), limit = 5)
+        val query1  = "Sport"
+        val santarem = GeoPoint(39.2849, 8.7041)
+        val autocompleteOptions = AutocompleteOptions(
+            query = query1,
+            position = santarem,
+            radius = Distance.meters(5000)
+        )
 
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                search.search(searchOptions)
+                search.autocompleteSearch(autocompleteOptions)
 
             }
         }

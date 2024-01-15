@@ -7,16 +7,15 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +25,7 @@ import java.io.ByteArrayOutputStream
 
 class TelaUtilizador : AppCompatActivity() {
 
+    private lateinit var textViewInteresses: TextView
     private lateinit var userName: TextView
     private lateinit var userEmail: TextView
     private lateinit var btnDeslogar: Button
@@ -72,6 +72,10 @@ class TelaUtilizador : AppCompatActivity() {
 
         exibirListaInteresses()
 
+        textViewInteresses.setOnClickListener {
+            val i: Intent = Intent(this, InteressesUser::class.java)
+            startActivity(i)
+        }
 
     }
 
@@ -179,5 +183,13 @@ class TelaUtilizador : AppCompatActivity() {
         userEmail = findViewById(R.id.userEmail)
         btnDeslogar = findViewById(R.id.btnDeslogar)
         userImage = findViewById(R.id.userImage)
+        textViewInteresses = findViewById(R.id.textViewInteresses)
     }
+
+    fun abrirTelaPrincipal(view: View) {
+        val i: Intent = Intent(this, TelaPrincipal::class.java)
+        startActivity(i)
+        finish()
+    }
+
 }

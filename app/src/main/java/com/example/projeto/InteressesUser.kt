@@ -1,24 +1,24 @@
 package com.example.projeto
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
 
 class InteressesUser : AppCompatActivity() {
 
     private lateinit var editTextInteresse: EditText
     private lateinit var buttonAdicionar: Button
     private lateinit var btnVerPerfil: Button
+    private lateinit var lnComponents: LinearLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +26,7 @@ class InteressesUser : AppCompatActivity() {
         setContentView(R.layout.activity_interesses_user)
 
         iniciarComponentes()
+        exibirListaInteresses()
 
         buttonAdicionar.setOnClickListener {
             adicionarInteresse()
@@ -50,6 +51,7 @@ class InteressesUser : AppCompatActivity() {
     }
 
     private fun exibirListaInteresses() {
+        lnComponents.removeAllViews()
         val db: FirebaseFirestore = FirebaseFirestore.getInstance()
         val utilizadorID: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
@@ -62,11 +64,14 @@ class InteressesUser : AppCompatActivity() {
 
                 for (document in querySnapshot) {
                     val interesse = document.getString("interesse")
+
+                    val textViewLayout = LayoutInflater.from(this).inflate(R.layout.item_interesse, null)
+                    val textInteresse = textViewLayout.findViewById<TextView>(R.id.interesse)
+                    textInteresse.text = interesse
+
+                    lnComponents.addView(textViewLayout)
                     interesses.append("$interesse\n")
                 }
-
-                val textViewListaInteresses: TextView = findViewById(R.id.textViewInteresses)
-                textViewListaInteresses.text = interesses.toString()
             }
             .addOnFailureListener { e ->
                 exibirSnackbar("Erro ao obter interesses: $e")
@@ -110,5 +115,6 @@ class InteressesUser : AppCompatActivity() {
         editTextInteresse = findViewById(R.id.editTextInteresse)
         buttonAdicionar = findViewById(R.id.buttonAdicionar)
         btnVerPerfil = findViewById(R.id.buttonVerPerfil)
+        lnComponents = findViewById(R.id.lnComponents)
     }
 }

@@ -15,7 +15,9 @@ import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
+import com.tomtom.sdk.map.display.image.ImageFactory
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
+import com.tomtom.sdk.map.display.marker.MarkerOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
 import com.tomtom.sdk.map.display.ui.UiComponentClickListener
 
@@ -104,6 +106,11 @@ class Mapa : AppCompatActivity() {
                 mapFragment.currentLocationButton.addCurrentLocationButtonClickListener(
                     uiComponentClickListener
                 )
+                val markerOptions = MarkerOptions(
+                    coordinate = placePosition,
+                    pinImage = ImageFactory.fromResource(R.drawable.ic_marker_pin)
+                )
+                tomTomMap.addMarker(markerOptions)
             }
         } else {
             locationProvider.addOnLocationUpdateListener(onLocationUpdateListener)
@@ -111,6 +118,7 @@ class Mapa : AppCompatActivity() {
             val locationMarker = LocationMarkerOptions(type = LocationMarkerOptions.Type.Pointer)
             tomTomMap.enableLocationMarker(locationMarker)
         }
+        tomTomMap.showTrafficFlow()
     }
 
     private fun requestLocationPermission() {

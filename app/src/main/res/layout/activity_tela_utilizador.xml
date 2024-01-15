@@ -7,6 +7,17 @@
     android:background="@drawable/background"
     tools:context=".TelaUtilizador">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:backgroundTint="@color/black"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="tela principal"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="abrirTelaPrincipal"
+        />
+
     <ImageView
         android:id="@+id/userImage"
         android:layout_width="150sp"
